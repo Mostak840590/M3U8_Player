@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>m3u8 to iframe Converter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>m3u8 to iframe Converter by Mostak</h1>
+      <h4>Free Online HLS M3U8 Livestream Player</h4>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <img src="logo.png" alt="Logo" class="logo">
+
+      <div class="converter-container">
+        <label for="hlsLink">Enter HLS Link:</label>
+        <input type="text" id="hlsLink" name="hlsLink" placeholder="Your HLS URL here .m3u8 .mpd .mp4 .mkv .webm">
+        <select id="playerSelect">
+          <option value="cleper">Cleper Player</option>
+          <option value="jw">JW Player</option>
+          <option value="videojs">Video.js Player</option>
+          <option value="flowplayer">flowplayer</option>
+          <option value="plyrPlayer">plyr Player</option>
+        </select>
+        <button onclick="generatePreview()">Generate Preview</button>
+        <button onclick="loadSimpleHLS()">Load Sample HLS</button>
+      </div>
+
+      <div class="preview-container" id="previewContainer">
+        <p>Add video URL to start playing.</p>
+      </div>
+
+      <div class="embed-container">
+        <input type="text" id="embedLink" style="display: none;">
+        <button id="copyEmbedBtn" style="display: none;" onclick="copyEmbedLink()">Copy Embed Link</button>
+      </div>
+    </div>
+
+    <section class="texthere">
+      <div class="container">
+        <h2>Player Features</h2>
+        <ul>
+          <li>Free to use</li>
+          <li>Supports multiple platforms: Android, Mac OS X, tvOS, Windows, Android TV</li>
+          <!-- Add more features as needed -->
+        </ul>
+      </div>
+    </section>
+    <section class="supported-platforms">
+      <div class="container">
+        <h2>Supported Platforms</h2>
+        <p>This tool supports the following platforms for embedding:</p>
+        <ul>
+          <li>Android</li>
+          <li>Mac OS X</li>
+          <li>tvOS</li>
+          <li>Windows</li>
+          <li>Android TV</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="how-to-use">
+      <div class="container">
+        <h2>How to Use</h2>
+        <p>Start by entering an HLS stream link into the input field labeled "Enter HLS Link". This can be a direct link to an .m3u8 playlist or other supported formats.</p>
+
+        <h3>Select Player</h3>
+        <p>Choose a player from the dropdown list (Cleper Player, JW Player, Video.js Player or any player). This selection determines how the HLS stream will be embedded.</p>
+
+        <h3>Generate Preview</h3>
+        <p>Click the "Generate Preview" button to create an iframe preview below. This iframe embeds the HLS stream using the selected player.</p>
+
+        <h3>Copy Embed Link</h3>
+        <p>Once the preview is generated, click the "Copy Embed Link" button to copy the embed code (iframe URL) to your clipboard. This link can then be used to embed the HLS stream into any HTML page or platform that supports iframes.</p>
+      </div>
+    </section>
+
+    
+
+    <section class="embed-methods">
+      <div class="container">
+        <h2>Embedding Methods</h2>
+        <p>If your website is secured with an SSL certificate, use the HTTPS protocol for the embeddable URL. Ensure your streaming URL also supports the HTTPS format:</p>
+        <p><strong>Example:</strong> https://noobromon.github.io/m3u8-to-iframe/live/player1.html?url=https://example.com/playlist.m3u8</p>
+
+        <h4>Example of Embed Iframe:</h4>
+        <div class="code-snippet">
+    <pre><code>&lt;iframe 
+        frameborder="0" 
+        height="100%" 
+        width="450px" 
+        allowfullscreen="" 
+        scrolling="no" 
+        allow="autoplay;fullscreen" 
+        src="https://noobromon.github.io/m3u8-to-iframe/live/player1.html?url=http://example.com/live.m3u8"&gt;
+    &lt;/iframe&gt;
+    </code></pre>
+    <button class="copy-button" onclick="copyCode()">Copy</button>
+</div>
+        
+        <h3>HTTP Method (For Non-Secured Websites)</h3>
+        <p>If your website does not have an SSL certificate, use the HTTPS protocol for embedding:</p>
+        <p><strong>Example:</strong> https://noobromon.github.io/m3u8-to-iframe/live/player1.html?url=https://example.com/playlist.m3u8</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="scripts.js"></script>
+  <div class="container1">
+    <div class="container">
+      <p>&copy; 2024 m3u8 to iframe Converter. All rights reserved.</p>
+      <p>Author: Mostak - Distributed By: <a href="#" target="_blank" title="Mostak">Mostak</a></p>
+    </div>
+  </div>
+</body>
+</html>

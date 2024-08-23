@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Player 1</title>
+<style>
+    body {
+        margin: 0;
+       background: #000;
+    }
+    #player {
+        width: 100%;
+        height: 100vh;
+    }
+    #UnMutePlayer {
+        position: absolute;
+        left: 12px;
+        top: 7px;
+        width: 250px;
+        height: 45px;
+        visibility: visible; /* Set initial visibility to "visible" */
+        opacity: .8;
+    }
+
+    .unmute {
+        background: transparent;
+        z-index: 2;
+        color: #fff;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 200px;
+        border: 2px solid #fff;
+        padding: 4px 0;
+        border-radius: 2px;
+        cursor: pointer;
+        opacity: .8;
+        font-size: 14px;
+    }
+
+    .unmute:hover {
+        opacity: .9;
+    }
+
+    #UnMutePlayer:hover {
+        opacity: .9;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="https://plus880.netlify.app/clap.css">
+</head>
+<body>
+<div id="player">
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/clappr/clappr-level-selector-plugin@latest/dist/level-selector.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/@clappr/hlsjs-playback@1.2.0/dist/hlsjs-playback.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/@c3voc/clappr-audio-track-selector@0.2.4/dist/audio-track-selector.min.js"></script>
+
+<script>
+    function getParameterByName(name) {
+        name = name.replace(/[\[\]]/g, "\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(window.location.href);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    var hlsURL = getParameterByName('url'); // Fetch HLS URL from URL parameter
+
+    // Check if HLS URL is provided
+    if (hlsURL) {
+        var player = new Clappr.Player({
+            source: hlsURL,
+            plugins: [HlsjsPlayback, LevelSelector, AudioTrackSelector],
+            width: '100%',
+            height: '100vh',
+            autoPlay: true,
+            mimeType: "application/x-mpegURL",
+            mediacontrol: { seekbar: "#ff0000", buttons: "#eee" },
+            parentId: "#player",
+            hlsRecoverAttempts: 1,
+            hlsPlayback: {
+                preload: true,
+                customListeners: [],
+            },
+            playback: {
+                extrapolatedWindowNumSegments: 2,
+                triggerFatalErrorOnResourceDenied: false,
+                hlsjsConfig: {
+                    // hls.js specific options
+                },
+            },
+            events: {
+                onError: function (e) {
+                    // Perform action when an error occurs
+                    // In this case, we'll reload the stream up to maxAttempts times
+                    if (errorCounter < maxAttempts) {
+                        errorCounter++;
+                        isReloading = false; // Reset reloading flag to allow subsequent reloads
+                        reloadStream();
+                    }
+                },
+                onPlay: function () {
+                    // Reset error counter and reloading flag when the stream starts playing
+                    errorCounter = 0;
+                    isReloading = false;
+                }
+            }
+        });
+    } else {
+        console.error("No video URL provided.");
+    }
+
+    // Define the main domain
+    var mainDomain = 'https://noobromon.github.io/';
+
+    function isURLAllowed(url) {
+        return url.startsWith(mainDomain);
+    }
+
+    if (!isURLAllowed(window.location.href)) {
+        // Redirect to the main domain after 10 seconds
+        setTimeout(function () {
+            window.location.href = 'https://noobromon.github.io/m3u8-to-iframe/';
+        }, 10); // 10 seconds delay
+    }
+
+    // Disable certain browser features
+    (function () {
+    var script = document.createElement('script');
+    script.setAttribute('disable-devtool-auto', 'true');
+    script.setAttribute('src', 'https://cdn.jsdelivr.net/npm/disable-devtool');
+    script.setAttribute('clear-log', 'true');
+    document.body.appendChild(script);
+})();
+</script>
+</body>
+</html>
